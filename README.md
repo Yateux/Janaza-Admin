@@ -1,135 +1,135 @@
 # Janaza Admin Panel
 
-Panel d'administration moderne pour la plateforme Janaza (services funéraires musulmans).
+Modern administration panel for the Janaza platform (Muslim funeral services).
 
-## Stack Technique
+## Tech Stack
 
-- **React 18+** avec TypeScript
-- **Vite** comme bundler
-- **React Router v6** pour le routing
-- **TanStack Query (React Query)** pour la gestion des appels API
-- **Axios** pour les requêtes HTTP
-- **Zustand** pour le state management
-- **shadcn/ui + Tailwind CSS** pour les composants UI
-- **React Hook Form + Zod** pour la validation des formulaires
+- **React 18+** with TypeScript
+- **Vite** as bundler
+- **React Router v6** for routing
+- **TanStack Query (React Query)** for API call management
+- **Axios** for HTTP requests
+- **Zustand** for state management
+- **shadcn/ui + Tailwind CSS** for UI components
+- **React Hook Form + Zod** for form validation
 
-## Prérequis
+## Prerequisites
 
 - Node.js 18+
-- pnpm 8+ (installé globalement: `npm install -g pnpm`)
-- API Backend Janaza (NestJS) en cours d'exécution
+- pnpm 8+ (installed globally: `npm install -g pnpm`)
+- Janaza Backend API (NestJS) running
 
 ## Installation
 
 ```bash
-# Installer les dépendances
+# Install dependencies
 pnpm install
 
-# Copier le fichier d'environnement
+# Copy environment file
 cp .env.example .env
 
-# Modifier les variables d'environnement si nécessaire
+# Modify environment variables if needed
 # VITE_API_URL=http://localhost:3000/
 ```
 
-## Développement
+## Development
 
 ```bash
-# Démarrer le serveur de développement
+# Start development server
 pnpm dev
 
-# L'application sera disponible sur http://localhost:5173
+# The application will be available at http://localhost:5173
 ```
 
-## Build Production
+## Production Build
 
 ```bash
-# Build pour la production
+# Build for production
 pnpm build
 
-# Prévisualiser le build
+# Preview the build
 pnpm preview
 ```
 
-## Scripts Disponibles
+## Available Scripts
 
-- `pnpm dev` - Démarrer le serveur de développement
-- `pnpm build` - Build pour la production
-- `pnpm preview` - Prévisualiser le build de production
-- `pnpm lint` - Linter le code
-- `pnpm format` - Formater le code avec Prettier
-- `pnpm type-check` - Vérifier les types TypeScript
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm lint` - Lint code
+- `pnpm format` - Format code with Prettier
+- `pnpm type-check` - Check TypeScript types
 
-## Connexion
+## Login
 
-Seuls les utilisateurs avec le rôle **Admin** peuvent se connecter au panel d'administration.
+Only users with the **Admin** role can log in to the administration panel.
 
-## Fonctionnalités
+## Features
 
 ### 📊 Dashboard
-- Statistiques générales (utilisateurs, annonces, signalements)
-- Dernières annonces créées
-- Signalements non résolus
+- General statistics (users, announcements, reports)
+- Latest created announcements
+- Unresolved reports
 
-### 👥 Gestion Utilisateurs
-- Liste complète avec recherche et filtres
-- Création/modification/suppression d'utilisateurs
-- Vue détaillée avec historique d'activité
+### 👥 User Management
+- Complete list with search and filters
+- Create/edit/delete users
+- Detailed view with activity history
 
-### 📢 Gestion Annonces
-- Liste des annonces actives et expirées
-- Détails complets avec localisation
-- Gestion des commentaires
-- Marquage comme expirée
-- Suppression avec raison
+### 📢 Announcement Management
+- List of active and expired announcements
+- Complete details with location
+- Comment management
+- Mark as expired
+- Delete with reason
 
-### 🚨 Gestion Signalements
-- Liste des signalements en attente et résolus
-- Résolution avec notes administrateur
-- Suppression d'annonce directement depuis le signalement
+### 🚨 Report Management
+- List of pending and resolved reports
+- Resolution with admin notes
+- Delete announcement directly from report
 
-### 🏷️ Gestion Raisons
-- CRUD complet des raisons de suppression
-- Classification par type et catégorie
-- Activation/désactivation
+### 🏷️ Reason Management
+- Full CRUD for deletion reasons
+- Classification by type and category
+- Activation/deactivation
 
-### 🔔 Gestion Notifications
-- Envoi de notifications push à un utilisateur
-- Diffusion à tous les utilisateurs
-- Gestion des tokens push
-- Historique des appareils
+### 🔔 Notification Management
+- Send push notifications to a user
+- Broadcast to all users
+- Push token management
+- Device history
 
-## Sécurité
+## Security
 
-- Authentification JWT
-- Vérification du rôle admin à plusieurs niveaux
-- Protection des routes
-- Gestion des erreurs 401/403
-- Validation des formulaires côté client et serveur
+- JWT authentication
+- Admin role verification at multiple levels
+- Route protection
+- 401/403 error handling
+- Client-side and server-side form validation
 
 ## Architecture
 
 ```
 src/
-├── api/              # Configuration API et hooks React Query
-├── components/       # Composants React
-│   ├── ui/          # Composants UI (shadcn/ui)
-│   ├── layout/      # Layout de l'app (Sidebar, Header)
-│   └── [feature]/   # Composants par fonctionnalité
-├── lib/             # Utilitaires et validations
-├── pages/           # Pages de l'application
-├── routes/          # Configuration du routing
-├── stores/          # Stores Zustand
-└── types/           # Types TypeScript
+├── api/              # API configuration and React Query hooks
+├── components/       # React components
+│   ├── ui/          # UI components (shadcn/ui)
+│   ├── layout/      # App layout (Sidebar, Header)
+│   └── [feature]/   # Feature-specific components
+├── lib/             # Utilities and validations
+├── pages/           # Application pages
+├── routes/          # Routing configuration
+├── stores/          # Zustand stores
+└── types/           # TypeScript types
 ```
 
-## Contribution
+## Contributing
 
-1. Créer une branche depuis `main`
-2. Développer la fonctionnalité
-3. Tester localement
-4. Créer une Pull Request
+1. Create a branch from `main`
+2. Develop the feature
+3. Test locally
+4. Create a Pull Request
 
 ## Support
 
-Pour toute question ou problème, contacter l'équipe de développement.
+For any questions or issues, contact the development team.

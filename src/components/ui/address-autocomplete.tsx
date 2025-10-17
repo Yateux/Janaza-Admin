@@ -56,7 +56,7 @@ export function AddressAutocomplete({
       const addressComponents = place.address_components || [];
 
       const getAddressComponent = (type: string): string => {
-        const component = addressComponents.find((c) => c.types.includes(type));
+        const component = addressComponents.find((c: { types: string[]; long_name: string }) => c.types.includes(type));
         return component?.long_name || '';
       };
 

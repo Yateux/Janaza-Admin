@@ -40,7 +40,7 @@ export default function AnnouncesPage() {
     if (!currentData) return [];
 
     // Filter
-    let filtered = currentData.filter((announce) => {
+    const filtered = currentData.filter((announce) => {
       // Search filter (name, city)
       const searchLower = searchTerm.toLowerCase();
       const matchesSearch =

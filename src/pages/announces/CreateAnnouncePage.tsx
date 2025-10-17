@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { AnnounceForm } from '@/components/announces/AnnounceForm';
+import { AnnounceForm, AnnounceFormValues, UpdateAnnounceFormValues } from '@/components/announces/AnnounceForm';
 import { useCreateAnnounce, CreateAnnounceDto } from '@/api/mutations/useAnnounceMutations';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -9,67 +9,47 @@ export default function CreateAnnouncePage() {
   const navigate = useNavigate();
   const createMutation = useCreateAnnounce();
 
-  const handleSubmit = async (data: {
-    firstName: string;
-    lastName: string;
-    gender: 'M' | 'F';
-    dateOfBirth?: string;
-    remarks?: string;
-    addressPray: string;
-    postCodePray: string;
-    cityPray: string;
-    countryPray: string;
-    latitudePray?: string;
-    longitudePray?: string;
-    startDate: string;
-    startTime: string;
-    hasFuneralLocation?: boolean;
-    addressFuneral?: string;
-    postCodeFuneral?: string;
-    cityFuneral?: string;
-    countryFuneral?: string;
-    latitudeFuneral?: string;
-    longitudeFuneral?: string;
-    funeralDate?: string;
-    funeralTime?: string;
-    active?: boolean;
-    hasForum?: boolean;
-  }) => {
+  const handleSubmit = async (data: AnnounceFormValues | UpdateAnnounceFormValues) => {
+    // Pour la création, on doit avoir tous les champs requis (AnnounceFormValues)
+    if (!('startDate' in data) || !('startTime' in data) || !('addressPray' in data)) {
+      throw new Error('Données incomplètes pour créer une annonce');
+    }
+    const formData = data as AnnounceFormValues;
     // Préparer les données pour l'API
     const announceData: CreateAnnounceDto = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      gender: data.gender,
-      dateOfBirth: data.dateOfBirth ? createIsoFromInputs(data.dateOfBirth, '00:00') : undefined,
-      remarks: data.remarks,
-      addressPray: data.addressPray,
-      postCodePray: parseInt(data.postCodePray),
-      cityPray: data.cityPray,
-      countryPray: data.countryPray,
-      latitudePray: data.latitudePray ? parseFloat(data.latitudePray) : undefined,
-      longitudePray: data.longitudePray ? parseFloat(data.longitudePray) : undefined,
-      startDate: createIsoFromInputs(data.startDate, data.startTime),
-      startTime: createIsoFromInputs(data.startDate, data.startTime),
-      active: data.active,
-      hasForum: data.hasForum,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      gender: formData.gender,
+      dateOfBirth: formData.dateOfBirth ? createIsoFromInputs(formData.dateOfBirth, '00:00') : undefined,
+      remarks: formData.remarks,
+      addressPray: formData.addressPray,
+      postCodePray: parseInt(formData.postCodePray),
+      cityPray: formData.cityPray,
+      countryPray: formData.countryPray,
+      latitudePray: formData.latitudePray ? parseFloat(formData.latitudePray) : undefined,
+      longitudePray: formData.longitudePray ? parseFloat(formData.longitudePray) : undefined,
+      startDate: createIsoFromInputs(formData.startDate, formData.startTime),
+      startTime: createIsoFromInputs(formData.startDate, formData.startTime),
+      active: formData.active,
+      hasForum: formData.hasForum,
     };
 
     // Ajouter les données d'enterrement si présentes
-    if (data.hasFuneralLocation && data.addressFuneral) {
-      announceData.addressFuneral = data.addressFuneral;
-      announceData.postCodeFuneral = data.postCodeFuneral
-        ? parseInt(data.postCodeFuneral)
+    if (formData.hasFuneralLocation && formData.addressFuneral) {
+      announceData.addressFuneral = formData.addressFuneral;
+      announceData.postCodeFuneral = formData.postCodeFuneral
+        ? parseInt(formData.postCodeFuneral)
         : undefined;
-      announceData.cityFuneral = data.cityFuneral;
-      announceData.countryFuneral = data.countryFuneral;
-      announceData.latitudeFuneral = data.latitudeFuneral
-        ? parseFloat(data.latitudeFuneral)
+      announceData.cityFuneral = formData.cityFuneral;
+      announceData.countryFuneral = formData.countryFuneral;
+      announceData.latitudeFuneral = formData.latitudeFuneral
+        ? parseFloat(formData.latitudeFuneral)
         : undefined;
-      announceData.longitudeFuneral = data.longitudeFuneral
-        ? parseFloat(data.longitudeFuneral)
+      announceData.longitudeFuneral = formData.longitudeFuneral
+        ? parseFloat(formData.longitudeFuneral)
         : undefined;
-      announceData.funeralDate = data.funeralDate && data.funeralTime ? createIsoFromInputs(data.funeralDate, data.funeralTime) : undefined;
-      announceData.funeralTime = data.funeralDate && data.funeralTime ? createIsoFromInputs(data.funeralDate, data.funeralTime) : undefined;
+      announceData.funeralDate = formData.funeralDate && formData.funeralTime ? createIsoFromInputs(formData.funeralDate, formData.funeralTime) : undefined;
+      announceData.funeralTime = formData.funeralDate && formData.funeralTime ? createIsoFromInputs(formData.funeralDate, formData.funeralTime) : undefined;
     }
 
     await createMutation.mutateAsync(announceData);

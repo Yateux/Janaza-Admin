@@ -9,7 +9,7 @@ import { useAnnounceReports } from '@/api/queries/useReports';
 import { useDeleteComment, useUpdateAnnounce } from '@/api/mutations/useAnnounceMutations';
 import { ExpireDialog } from '@/components/announces/ExpireDialog';
 import { AnnounceDeleteDialog } from '@/components/announces/AnnounceDeleteDialog';
-import { AnnounceForm } from '@/components/announces/AnnounceForm';
+import { AnnounceForm, AnnounceFormValues, UpdateAnnounceFormValues } from '@/components/announces/AnnounceForm';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -102,7 +102,7 @@ function CommentItem({ comment, replies, onDelete }: CommentItemProps) {
             <CommentItem
               key={reply.id}
               comment={reply}
-              replies={(reply as any).reply || []}
+              replies={(reply as CommentAnnounce & { reply?: CommentAnnounce[] }).reply || []}
               onDelete={onDelete}
             />
           ))}
@@ -218,7 +218,7 @@ export default function AnnounceDetailPage() {
     navigate('/announces');
   };
 
-  const handleUpdateSubmit = async (data: any) => {
+  const handleUpdateSubmit = async (data: AnnounceFormValues | UpdateAnnounceFormValues) => {
     // Convertir la date de naissance si présente
     const updateData = {
       ...data,
@@ -485,7 +485,7 @@ export default function AnnounceDetailPage() {
             </div>
           ) : (
             <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-              {participants.map((device: any) => (
+              {participants.map((device: { deviceId: string; user?: { id: string; firstName?: string; lastName?: string; email?: string }; expoPushToken?: string }) => (
                 <div
                   key={device.deviceId}
                   className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-all duration-200 border border-slate-200"
@@ -504,7 +504,7 @@ export default function AnnounceDetailPage() {
                           to={`/users/${device.user.id}`}
                           className="font-semibold text-slate-900 hover:text-blue-600 transition-colors"
                         >
-                          {getFullName(device.user.firstName, device.user.lastName)}
+                          {getFullName(device.user.firstName || null, device.user.lastName || null)}
                         </Link>
                         <p className="text-xs text-slate-500">{device.user.email}</p>
                       </>
@@ -549,7 +549,7 @@ export default function AnnounceDetailPage() {
                 <CommentItem
                   key={comment.id}
                   comment={comment}
-                  replies={(comment as any).reply || []}
+                  replies={(comment as CommentAnnounce & { reply?: CommentAnnounce[] }).reply || []}
                   onDelete={(c) => {
                     setSelectedComment(c);
                     setDeleteCommentDialogOpen(true);

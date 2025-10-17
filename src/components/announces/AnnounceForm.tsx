@@ -25,6 +25,7 @@ import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { AddressAutocomplete, AddressDetails } from '@/components/ui/address-autocomplete';
 import { toDateInput } from '@/lib/utils';
+import { Announce } from '@/types/api.types';
 
 const announceFormSchema = z.object({
   // Informations défunt
@@ -71,11 +72,11 @@ const updateAnnounceFormSchema = z.object({
   hasForum: z.boolean().default(true),
 });
 
-type AnnounceFormValues = z.infer<typeof announceFormSchema>;
-type UpdateAnnounceFormValues = z.infer<typeof updateAnnounceFormSchema>;
+export type AnnounceFormValues = z.infer<typeof announceFormSchema>;
+export type UpdateAnnounceFormValues = z.infer<typeof updateAnnounceFormSchema>;
 
 interface AnnounceFormProps {
-  announce?: any; // Announce à éditer (optionnel)
+  announce?: Partial<AnnounceFormValues & { id: string; active: boolean; hasForum: boolean }> | Announce; // Announce à éditer (optionnel)
   onSubmit: (data: AnnounceFormValues | UpdateAnnounceFormValues) => Promise<void>;
   isLoading?: boolean;
 }
@@ -90,7 +91,7 @@ export function AnnounceForm({ announce, onSubmit, isLoading }: AnnounceFormProp
       firstName: announce.firstName || '',
       lastName: announce.lastName || '',
       gender: announce.gender || 'M',
-      dateOfBirth: toDateInput(announce.dateOfBirth),
+      dateOfBirth: toDateInput(announce.dateOfBirth || null),
       remarks: announce.remarks || '',
       active: announce.active ?? true,
       hasForum: announce.hasForum ?? true,
@@ -103,7 +104,7 @@ export function AnnounceForm({ announce, onSubmit, isLoading }: AnnounceFormProp
     },
   });
 
-  const hasFuneralLocation = form.watch('hasFuneralLocation' as any);
+  const hasFuneralLocation = !isEditMode && form.watch('hasFuneralLocation' as keyof (AnnounceFormValues | UpdateAnnounceFormValues));
 
   return (
     <Form {...form}>

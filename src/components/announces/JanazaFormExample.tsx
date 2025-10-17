@@ -66,6 +66,24 @@ const janazaFormSchema = z.object({
 
 type JanazaFormValues = z.infer<typeof janazaFormSchema>;
 
+interface JanazaPayload {
+  firstName: string;
+  lastName: string;
+  gender: 'M' | 'F';
+  startDate: string;
+  startTime: string;
+  addressPray: string;
+  cityPray: string;
+  postCodePray: string;
+  countryPray: string;
+  funeralDate?: string | null;
+  funeralTime?: string | null;
+  addressFuneral?: string | null;
+  cityFuneral?: string | null;
+  postCodeFuneral?: string | null;
+  countryFuneral?: string | null;
+}
+
 interface JanazaFormExampleProps {
   // Pour l'édition, on peut passer une janaza existante
   janaza?: {
@@ -82,7 +100,7 @@ interface JanazaFormExampleProps {
     addressFuneral?: string | null;
     cityFuneral?: string | null;
   };
-  onSubmit?: (payload: any) => Promise<void>;
+  onSubmit?: (payload: JanazaPayload) => Promise<void>;
 }
 
 export function JanazaFormExample({ janaza, onSubmit }: JanazaFormExampleProps) {

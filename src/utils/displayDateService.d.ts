@@ -12,8 +12,7 @@ export function formatDisplayTime(time: string | Date | null): string;
  * Formater date et heure SANS conversion
  */
 export function formatDisplayDateTime(
-  date: string | Date | null,
-  time: string | Date | null,
+  datetime: string | Date | null,
   format?: string
 ): string;
 
