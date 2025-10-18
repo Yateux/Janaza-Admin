@@ -130,6 +130,87 @@ src/
 3. Test locally
 4. Create a Pull Request
 
+## Deployment
+
+### Vercel Deployment
+
+This project is configured for automatic deployment on Vercel via GitHub Actions.
+
+#### Initial Setup
+
+1. **Create a Vercel project**
+   - Link your GitHub repository to Vercel
+   - Configure the project with the following settings:
+     - Framework Preset: `Vite`
+     - Build Command: `pnpm build`
+     - Output Directory: `dist`
+     - Install Command: `pnpm install`
+
+2. **Get Vercel Credentials**
+   ```bash
+   # Install Vercel CLI
+   pnpm add -g vercel
+
+   # Login to Vercel
+   vercel login
+
+   # Link your project
+   vercel link
+
+   # Get your credentials
+   vercel project ls  # Get your VERCEL_PROJECT_ID
+   ```
+
+   You can also find these values in:
+   - `VERCEL_ORG_ID`: Vercel Dashboard > Settings > General
+   - `VERCEL_PROJECT_ID`: Project Settings > General
+
+3. **Configure GitHub Secrets**
+
+   Go to your GitHub repository > Settings > Secrets and variables > Actions
+
+   Add the following secrets:
+   - `VERCEL_TOKEN`: Generate at https://vercel.com/account/tokens
+   - `VERCEL_ORG_ID`: Your Vercel organization ID
+   - `VERCEL_PROJECT_ID`: Your Vercel project ID
+   - `VITE_API_URL_PREVIEW`: Backend API URL for preview (e.g., https://api-preview.yourapp.com/)
+   - `VITE_API_URL_PRODUCTION`: Backend API URL for production (e.g., https://api.yourapp.com/)
+   - `VITE_APP_NAME`: Application name (e.g., "Janaza Admin")
+
+#### How it works
+
+The CI/CD pipeline automatically:
+
+1. **On Pull Request**:
+   - Runs type checking and linting
+   - Builds and deploys a preview version
+   - Comments the PR with the preview URL
+
+2. **On Push to main**:
+   - Runs type checking and linting
+   - Builds and deploys to production
+   - Uses production environment variables
+
+#### Environment Variables
+
+Different environment variables are used for each environment:
+
+- **Local Development**: Uses `.env` file
+- **Preview**: Uses `VITE_API_URL_PREVIEW` from GitHub Secrets
+- **Production**: Uses `VITE_API_URL_PRODUCTION` from GitHub Secrets
+
+See [.env.production.example](.env.production.example) for required variables.
+
+#### Manual Deployment
+
+```bash
+# Deploy to preview
+vercel
+
+# Deploy to production
+vercel --prod
+```
+
 ## Support
 
 For any questions or issues, contact the development team.
