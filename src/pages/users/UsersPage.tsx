@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/dialog';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { User, Role } from '@/types/api.types';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, SlidersHorizontal } from 'lucide-react';
 
 export default function UsersPage() {
   const navigate = useNavigate();
@@ -38,6 +38,7 @@ export default function UsersPage() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const filteredUsers = useMemo(() => {
@@ -135,9 +136,9 @@ export default function UsersPage() {
             Gérer les utilisateurs de la plateforme Janaza Jamaa
           </p>
         </div>
-        <Button onClick={() => setCreateDialogOpen(true)} size="lg" className="gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg w-full sm:w-auto">
-          <Plus className="h-5 w-5" />
-          <span className="sm:inline">Créer un utilisateur</span>
+        <Button onClick={() => setCreateDialogOpen(true)} className="gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg w-full sm:w-auto h-10 sm:h-11">
+          <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
+          <span>Créer</span>
         </Button>
       </div>
 
@@ -191,19 +192,41 @@ export default function UsersPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 pt-4 sm:pt-6">
-          <div className="flex flex-col gap-3 sm:gap-4">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-2.5 sm:top-3 h-4 w-4 text-slate-400" />
+          {/* Version Mobile - Recherche + Bouton Filtres */}
+          <div className="flex gap-2 lg:hidden">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
               <Input
                 placeholder="Rechercher..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-10 sm:h-11 bg-slate-50 border-slate-200 focus:bg-white transition-colors"
+                className="pl-10 h-10 bg-slate-50 border-slate-200 focus:bg-white transition-colors"
               />
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
+            <Button
+              variant="outline"
+              onClick={() => setFiltersOpen(true)}
+              className="h-10 px-3 gap-2 flex-shrink-0"
+            >
+              <SlidersHorizontal className="h-4 w-4" />
+              <span className="hidden sm:inline">Filtres</span>
+            </Button>
+          </div>
+
+          {/* Version Desktop - Tous les filtres visibles */}
+          <div className="hidden lg:flex flex-col gap-4">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+              <Input
+                placeholder="Rechercher par email, nom ou prénom..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 h-11 bg-slate-50 border-slate-200 focus:bg-white transition-colors"
+              />
+            </div>
+            <div className="flex gap-3">
               <Select value={roleFilter} onValueChange={setRoleFilter}>
-                <SelectTrigger className="h-10 sm:h-11 bg-slate-50 border-slate-200">
+                <SelectTrigger className="h-11 bg-slate-50 border-slate-200">
                   <SelectValue placeholder="Rôle" />
                 </SelectTrigger>
                 <SelectContent>
@@ -213,7 +236,7 @@ export default function UsersPage() {
                 </SelectContent>
               </Select>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="h-10 sm:h-11 bg-slate-50 border-slate-200">
+                <SelectTrigger className="h-11 bg-slate-50 border-slate-200">
                   <SelectValue placeholder="Statut" />
                 </SelectTrigger>
                 <SelectContent>
@@ -223,21 +246,21 @@ export default function UsersPage() {
                 </SelectContent>
               </Select>
               <Select value={sortByDate} onValueChange={setSortByDate}>
-                <SelectTrigger className="h-10 sm:h-11 bg-slate-50 border-slate-200">
-                  <SelectValue placeholder="Tri date" />
+                <SelectTrigger className="h-11 bg-slate-50 border-slate-200">
+                  <SelectValue placeholder="Trier par date" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Pas de tri</SelectItem>
-                  <SelectItem value="asc">Date ↑</SelectItem>
-                  <SelectItem value="desc">Date ↓</SelectItem>
+                  <SelectItem value="none">Pas de tri par date</SelectItem>
+                  <SelectItem value="asc">Date croissante</SelectItem>
+                  <SelectItem value="desc">Date décroissante</SelectItem>
                 </SelectContent>
               </Select>
               <Select value={sortByRole} onValueChange={setSortByRole}>
-                <SelectTrigger className="h-10 sm:h-11 bg-slate-50 border-slate-200 col-span-2 sm:col-span-1">
-                  <SelectValue placeholder="Tri rôle" />
+                <SelectTrigger className="h-11 bg-slate-50 border-slate-200">
+                  <SelectValue placeholder="Trier par rôle" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Pas de tri</SelectItem>
+                  <SelectItem value="none">Pas de tri par rôle</SelectItem>
                   <SelectItem value="asc">Rôle A-Z</SelectItem>
                   <SelectItem value="desc">Rôle Z-A</SelectItem>
                 </SelectContent>
@@ -287,6 +310,92 @@ export default function UsersPage() {
         onOpenChange={setDeleteDialogOpen}
         onSuccess={handleDeleteSuccess}
       />
+
+      {/* Dialog de filtres pour mobile */}
+      <Dialog open={filtersOpen} onOpenChange={setFiltersOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Filtres</DialogTitle>
+            <DialogDescription>
+              Filtrer et trier la liste des utilisateurs
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Rôle</label>
+              <Select value={roleFilter} onValueChange={setRoleFilter}>
+                <SelectTrigger className="h-11 bg-slate-50 border-slate-200">
+                  <SelectValue placeholder="Rôle" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous les rôles</SelectItem>
+                  <SelectItem value={Role.User}>Utilisateur</SelectItem>
+                  <SelectItem value={Role.Admin}>Administrateur</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Statut</label>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="h-11 bg-slate-50 border-slate-200">
+                  <SelectValue placeholder="Statut" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous les statuts</SelectItem>
+                  <SelectItem value="active">Actifs</SelectItem>
+                  <SelectItem value="deleted">Supprimés</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Trier par date</label>
+              <Select value={sortByDate} onValueChange={setSortByDate}>
+                <SelectTrigger className="h-11 bg-slate-50 border-slate-200">
+                  <SelectValue placeholder="Trier par date" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Pas de tri par date</SelectItem>
+                  <SelectItem value="asc">Date croissante</SelectItem>
+                  <SelectItem value="desc">Date décroissante</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Trier par rôle</label>
+              <Select value={sortByRole} onValueChange={setSortByRole}>
+                <SelectTrigger className="h-11 bg-slate-50 border-slate-200">
+                  <SelectValue placeholder="Trier par rôle" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Pas de tri par rôle</SelectItem>
+                  <SelectItem value="asc">Rôle A-Z</SelectItem>
+                  <SelectItem value="desc">Rôle Z-A</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex gap-2 pt-4">
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => {
+                  setRoleFilter('all');
+                  setStatusFilter('all');
+                  setSortByDate('none');
+                  setSortByRole('none');
+                }}
+              >
+                Réinitialiser
+              </Button>
+              <Button
+                className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600"
+                onClick={() => setFiltersOpen(false)}
+              >
+                Appliquer
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

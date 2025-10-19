@@ -103,11 +103,18 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow-x: hidden;
   }
 
   /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  /* Prevent horizontal scroll on all containers */
+  * {
+    max-width: 100%;
   }
 }
 

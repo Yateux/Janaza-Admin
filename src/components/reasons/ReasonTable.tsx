@@ -163,25 +163,25 @@ export function ReasonTable({
       {/* Vue Mobile - Cards */}
       <div className="lg:hidden space-y-3">
         {reasons.map((reason) => (
-          <div key={reason.id} className="bg-white rounded-xl shadow-lg shadow-slate-200/50 p-4 space-y-3 border">
+          <div key={reason.id} className="bg-white rounded-xl shadow-lg shadow-slate-200/50 p-3 sm:p-4 space-y-3 border">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-slate-900 truncate">{reason.label}</p>
+                <p className="font-semibold text-slate-900 text-sm sm:text-base truncate">{reason.label}</p>
                 <p className="text-xs font-mono text-slate-600">{reason.code}</p>
                 {reason.description && (
-                  <p className="text-sm text-slate-600 mt-1 line-clamp-2">{reason.description}</p>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1 line-clamp-2">{reason.description}</p>
                 )}
               </div>
-              <div className="flex gap-1 flex-shrink-0">
+              <div className="flex gap-0.5 flex-shrink-0">
                 {onEdit && (
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => onEdit(reason)}
                     title="Modifier"
-                    className="h-8 w-8"
+                    className="h-7 w-7 sm:h-8 sm:w-8"
                   >
-                    <Pencil className="h-4 w-4" />
+                    <Pencil className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Button>
                 )}
                 {onDelete && (
@@ -190,30 +190,30 @@ export function ReasonTable({
                     size="icon"
                     onClick={() => onDelete(reason)}
                     title="Supprimer"
-                    className="h-8 w-8"
+                    className="h-7 w-7 sm:h-8 sm:w-8"
                   >
-                    <Trash2 className="h-4 w-4 text-destructive" />
+                    <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-destructive" />
                   </Button>
                 )}
               </div>
             </div>
 
-            <div className="flex items-center gap-2 flex-wrap">
-              <Badge variant={getTypeVariant(reason.type)}>
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+              <Badge variant={getTypeVariant(reason.type)} className="text-xs">
                 {getTypeLabel(reason.type)}
               </Badge>
-              <Badge variant="outline">
+              <Badge variant="outline" className="text-xs">
                 {getCategoryLabel(reason.category)}
               </Badge>
-              <Badge variant="outline" className="ml-auto">
+              <Badge variant="outline" className="ml-auto text-xs">
                 Ordre: {reason.displayOrder}
               </Badge>
             </div>
 
             <div className="flex items-center justify-between pt-2 border-t">
-              <span className="text-sm text-slate-600">Statut</span>
+              <span className="text-xs sm:text-sm text-slate-600">Statut</span>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-slate-900">
+                <span className="text-xs sm:text-sm font-medium text-slate-900">
                   {reason.active ? 'Actif' : 'Inactif'}
                 </span>
                 <Switch

@@ -165,24 +165,24 @@ export function AnnounceTable({
       {/* Vue Mobile - Cards */}
       <div className="lg:hidden space-y-3">
         {announces.map((announce) => (
-          <div key={announce.id} className="bg-white rounded-xl shadow-lg shadow-slate-200/50 p-4 space-y-3">
+          <div key={announce.id} className="bg-white rounded-xl shadow-lg shadow-slate-200/50 p-3 sm:p-4 space-y-3">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-slate-900 truncate">
+                <p className="font-semibold text-slate-900 text-sm sm:text-base truncate">
                   {getFullName(announce.firstName, announce.lastName)}
                 </p>
-                <p className="text-sm text-slate-600">{announce.cityPray}</p>
+                <p className="text-xs sm:text-sm text-slate-600 truncate">{announce.cityPray}</p>
               </div>
-              <div className="flex gap-1 flex-shrink-0">
+              <div className="flex gap-0.5 flex-shrink-0">
                 {onView && (
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => onView(announce)}
-                    title="Voir les détails"
-                    className="h-8 w-8"
+                    title="Voir"
+                    className="h-7 w-7 sm:h-8 sm:w-8"
                   >
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Button>
                 )}
                 {onExpire && !announce.expired && !announce.expiredAt && !announce.deletedAt && (
@@ -190,10 +190,10 @@ export function AnnounceTable({
                     variant="ghost"
                     size="icon"
                     onClick={() => onExpire(announce)}
-                    title="Marquer comme expirée"
-                    className="h-8 w-8"
+                    title="Expirer"
+                    className="h-7 w-7 sm:h-8 sm:w-8"
                   >
-                    <Clock className="h-4 w-4" />
+                    <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Button>
                 )}
                 {onDelete && !announce.deletedAt && (
@@ -202,30 +202,30 @@ export function AnnounceTable({
                     size="icon"
                     onClick={() => onDelete(announce)}
                     title="Supprimer"
-                    className="h-8 w-8"
+                    className="h-7 w-7 sm:h-8 sm:w-8"
                   >
-                    <Trash2 className="h-4 w-4 text-destructive" />
+                    <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-destructive" />
                   </Button>
                 )}
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-1.5 text-xs sm:text-sm">
               <div className="font-medium text-slate-700">{formatDisplayDate(announce.startDate)}</div>
               <span className="text-slate-400">•</span>
               <div className="text-slate-600">{formatDisplayTime(announce.startTime)}</div>
             </div>
 
-            <div className="flex items-center gap-2 flex-wrap">
-              <Badge variant="outline" className="bg-slate-50">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+              <Badge variant="outline" className="bg-slate-50 text-xs">
                 {getGenderLabel(announce.gender)}
               </Badge>
               {getStatusBadge(announce)}
-              <div className="flex items-center gap-1.5 ml-auto">
-                <div className="h-6 w-6 rounded-lg bg-blue-50 flex items-center justify-center">
-                  <Users className="h-3 w-3 text-blue-600" />
+              <div className="flex items-center gap-1 sm:gap-1.5 ml-auto">
+                <div className="h-5 w-5 sm:h-6 sm:w-6 rounded-lg bg-blue-50 flex items-center justify-center">
+                  <Users className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-blue-600" />
                 </div>
-                <span className="text-sm font-semibold text-slate-900">
+                <span className="text-xs sm:text-sm font-semibold text-slate-900">
                   {announce.participantsCount || 0}
                 </span>
               </div>

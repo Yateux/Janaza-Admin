@@ -172,30 +172,30 @@ export function ReportTable({
       {/* Vue Mobile - Cards */}
       <div className="lg:hidden space-y-3">
         {reports.map((report) => (
-          <div key={report.id} className="bg-white rounded-xl shadow-lg shadow-slate-200/50 p-4 space-y-3 border">
+          <div key={report.id} className="bg-white rounded-xl shadow-lg shadow-slate-200/50 p-3 sm:p-4 space-y-3 border">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
                 <Link
                   to={`/announces/${report.announce.id}`}
-                  className="font-semibold text-slate-900 hover:text-blue-600 transition-colors block truncate"
+                  className="font-semibold text-slate-900 hover:text-blue-600 transition-colors block truncate text-sm sm:text-base"
                 >
                   {getFullName(report.announce.firstName, report.announce.lastName)}
                 </Link>
-                <p className="text-sm text-slate-600 truncate">
+                <p className="text-xs sm:text-sm text-slate-600 truncate">
                   {report.reportedBy
                     ? getFullName(report.reportedBy.firstName, report.reportedBy.lastName)
                     : 'Anonyme'}
                 </p>
               </div>
-              <div className="flex gap-1 flex-shrink-0">
+              <div className="flex gap-0.5 flex-shrink-0">
                 <Link to={`/reports/${report.id}`}>
                   <Button
                     variant="ghost"
                     size="icon"
-                    title="Voir le signalement"
-                    className="h-8 w-8"
+                    title="Voir"
+                    className="h-7 w-7 sm:h-8 sm:w-8"
                   >
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Button>
                 </Link>
                 {onViewAnnounce && (
@@ -203,37 +203,37 @@ export function ReportTable({
                     variant="ghost"
                     size="icon"
                     onClick={() => onViewAnnounce(report)}
-                    title="Voir l'annonce"
-                    className="h-8 w-8 text-green-600 hover:text-green-700 hover:bg-green-50"
+                    title="Annonce"
+                    className="h-7 w-7 sm:h-8 sm:w-8 text-green-600 hover:text-green-700 hover:bg-green-50"
                   >
-                    <FileText className="h-4 w-4" />
+                    <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Button>
                 )}
               </div>
             </div>
 
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
               {getReportTypeBadge(report.type)}
               {getStatusBadge(report.resolved)}
             </div>
 
             {report.description && (
-              <p className="text-sm text-slate-600 line-clamp-2">
+              <p className="text-xs sm:text-sm text-slate-600 line-clamp-2">
                 {report.description}
               </p>
             )}
 
-            <div className="flex items-center justify-between pt-2 border-t">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-2 border-t">
               <p className="text-xs text-slate-500">
-                {formatDisplayDateTime(report.createdAt, 'DD/MM/YYYY à HH:mm')}
+                {formatDisplayDateTime(report.createdAt, 'DD/MM/YYYY')}
               </p>
-              <div className="flex gap-1">
+              <div className="flex gap-1 flex-wrap">
                 {onResolve && !report.resolved && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => onResolve(report)}
-                    className="h-7 text-xs"
+                    className="h-7 text-xs px-2"
                   >
                     <CheckCircle className="h-3 w-3 mr-1" />
                     Résoudre
@@ -244,7 +244,7 @@ export function ReportTable({
                     variant="ghost"
                     size="sm"
                     onClick={() => onDeleteAnnounce(report)}
-                    className="h-7 text-xs text-destructive"
+                    className="h-7 text-xs text-destructive px-2"
                   >
                     <Trash2 className="h-3 w-3 mr-1" />
                     Supprimer
