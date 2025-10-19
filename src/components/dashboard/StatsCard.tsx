@@ -50,46 +50,46 @@ export function StatsCard({
     <Card className="relative overflow-hidden border-0 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-300 hover:-translate-y-1">
       {/* Gradient Background Decoration */}
       <div className={cn(
-        "absolute top-0 right-0 w-32 h-32 bg-gradient-to-br opacity-10 rounded-full blur-2xl",
+        "absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br opacity-10 rounded-full blur-2xl",
         gradientClasses[gradient]
       )} />
 
-      <CardContent className="p-6 relative">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <p className="text-sm font-medium text-slate-600 mb-1">{title}</p>
-            <h3 className="text-3xl font-bold text-slate-900 mb-2">{value}</h3>
+      <CardContent className="p-4 sm:p-6 relative">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <p className="text-xs sm:text-sm font-medium text-slate-600 mb-1 truncate">{title}</p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-1 sm:mb-2">{value}</h3>
 
             {description && (
-              <p className="text-sm text-slate-500">{description}</p>
+              <p className="text-xs sm:text-sm text-slate-500 truncate">{description}</p>
             )}
 
             {trend && (
               <div className="flex items-center gap-1 mt-2">
                 {trend.isPositive ? (
-                  <TrendingUp className="h-4 w-4 text-emerald-600" />
+                  <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600 flex-shrink-0" />
                 ) : (
-                  <TrendingDown className="h-4 w-4 text-red-600" />
+                  <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4 text-red-600 flex-shrink-0" />
                 )}
                 <span
                   className={cn(
-                    "text-sm font-semibold",
+                    "text-xs sm:text-sm font-semibold",
                     trend.isPositive ? 'text-emerald-600' : 'text-red-600'
                   )}
                 >
                   {trend.isPositive ? '+' : ''}
                   {trend.value}%
                 </span>
-                <span className="text-xs text-slate-500">vs mois dernier</span>
+                <span className="text-xs text-slate-500 hidden sm:inline">vs mois dernier</span>
               </div>
             )}
           </div>
 
           <div className={cn(
-            "flex h-14 w-14 items-center justify-center rounded-2xl",
+            "flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl sm:rounded-2xl flex-shrink-0",
             bgClasses[gradient]
           )}>
-            <Icon className={cn("h-7 w-7", iconClasses[gradient])} />
+            <Icon className={cn("h-6 w-6 sm:h-7 sm:w-7", iconClasses[gradient])} />
           </div>
         </div>
       </CardContent>

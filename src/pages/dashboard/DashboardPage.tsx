@@ -63,15 +63,15 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Page Title */}
       <div>
-        <h1 className="text-4xl font-bold text-slate-900 mb-2">Tableau de bord</h1>
-        <p className="text-slate-600">Vue d'ensemble de la plateforme Janaza Jamaa</p>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-2">Tableau de bord</h1>
+        <p className="text-sm sm:text-base text-slate-600">Vue d'ensemble de la plateforme Janaza Jamaa</p>
       </div>
 
       {/* Statistiques principales */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <StatsCard
           title="Utilisateurs"
           value={stats.activeUsers}
@@ -103,7 +103,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Quick Actions & Activity Timeline */}
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-3">
         {/* Activity Timeline */}
         <div className="lg:col-span-2">
           <Card className="border-0 shadow-lg shadow-slate-200/50">
@@ -247,7 +247,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Additional Insights */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2">
         {/* Latest Comments */}
         <Card className="border-0 shadow-lg shadow-slate-200/50">
           <CardHeader className="border-b bg-gradient-to-r from-slate-50 to-white">

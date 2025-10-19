@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, Menu } from 'lucide-react';
 import { getFullName, getInitials } from '@/lib/utils';
 
 const routeTitles: Record<string, string> = {
@@ -23,7 +23,11 @@ const routeTitles: Record<string, string> = {
   '/notifications': 'Notifications',
 };
 
-export function Header() {
+interface HeaderProps {
+  onMenuClick?: () => void;
+}
+
+export function Header({ onMenuClick }: HeaderProps) {
   const { user } = useAuthStore();
   const logoutMutation = useLogout();
   const navigate = useNavigate();
@@ -45,24 +49,32 @@ export function Header() {
   };
 
   return (
-    <header className="fixed left-72 right-0 top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-slate-200">
-      <div className="flex h-20 items-center justify-between px-8">
-        <div className="flex items-center gap-6">
+    <header className="fixed left-0 lg:left-72 right-0 top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-slate-200">
+      <div className="flex h-16 sm:h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3 sm:gap-6">
+          {/* Bouton Menu Hamburger - visible uniquement sur mobile */}
+          <button
+            onClick={onMenuClick}
+            className="lg:hidden p-2 rounded-lg hover:bg-slate-100 text-slate-700 transition-colors"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">{getPageTitle()}</h2>
-            <p className="text-sm text-slate-500 mt-0.5">
+            <h2 className="text-lg sm:text-2xl font-bold text-slate-900 truncate">{getPageTitle()}</h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5 hidden sm:block">
               Bienvenue, {user?.firstName}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-12 gap-3 rounded-xl px-3 hover:bg-slate-50">
-                <Avatar className="h-9 w-9">
-                  <AvatarFallback className="bg-gradient-to-br from-blue-500 to-blue-600 text-white font-semibold">
+              <Button variant="ghost" className="relative h-10 sm:h-12 gap-2 sm:gap-3 rounded-xl px-2 sm:px-3 hover:bg-slate-50">
+                <Avatar className="h-8 w-8 sm:h-9 sm:w-9">
+                  <AvatarFallback className="bg-gradient-to-br from-blue-500 to-blue-600 text-white font-semibold text-xs sm:text-sm">
                     {getInitials(user?.firstName || null, user?.lastName || null)}
                   </AvatarFallback>
                 </Avatar>

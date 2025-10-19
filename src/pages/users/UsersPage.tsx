@@ -127,55 +127,58 @@ export default function UsersPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Utilisateurs</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Utilisateurs</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
             Gérer les utilisateurs de la plateforme Janaza Jamaa
           </p>
         </div>
-        <Button onClick={() => setCreateDialogOpen(true)} size="lg" className="gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg">
+        <Button onClick={() => setCreateDialogOpen(true)} size="lg" className="gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg w-full sm:w-auto">
           <Plus className="h-5 w-5" />
-          Créer un utilisateur
+          <span className="sm:inline">Créer un utilisateur</span>
         </Button>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:gap-4 lg:gap-6 grid-cols-2 lg:grid-cols-4">
         <Card className="border-0 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-300 hover:-translate-y-1">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-slate-600">Total</CardTitle>
+          <CardHeader className="pb-2 sm:pb-3">
+            <CardTitle className="text-xs sm:text-sm font-medium text-slate-600">Total</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-900">{stats.total}</div>
-            <p className="text-sm text-slate-500">utilisateurs</p>
+            <div className="text-2xl sm:text-3xl font-bold text-slate-900">{stats.total}</div>
+            <p className="text-xs sm:text-sm text-slate-500">utilisateurs</p>
           </CardContent>
         </Card>
         <Card className="border-0 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-blue-50 to-indigo-50">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-blue-700">Actifs</CardTitle>
+          <CardHeader className="pb-2 sm:pb-3">
+            <CardTitle className="text-xs sm:text-sm font-medium text-blue-700">Actifs</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-blue-700">{stats.active}</div>
-            <p className="text-sm text-blue-600">utilisateurs actifs</p>
+            <div className="text-2xl sm:text-3xl font-bold text-blue-700">{stats.active}</div>
+            <p className="text-xs sm:text-sm text-blue-600 hidden sm:block">utilisateurs actifs</p>
+            <p className="text-xs sm:text-sm text-blue-600 sm:hidden">actifs</p>
           </CardContent>
         </Card>
         <Card className="border-0 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-red-50 to-rose-50">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-red-700">Supprimés</CardTitle>
+          <CardHeader className="pb-2 sm:pb-3">
+            <CardTitle className="text-xs sm:text-sm font-medium text-red-700">Supprimés</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-red-700">{stats.deleted}</div>
-            <p className="text-sm text-red-600">utilisateurs supprimés</p>
+            <div className="text-2xl sm:text-3xl font-bold text-red-700">{stats.deleted}</div>
+            <p className="text-xs sm:text-sm text-red-600 hidden sm:block">utilisateurs supprimés</p>
+            <p className="text-xs sm:text-sm text-red-600 sm:hidden">supprimés</p>
           </CardContent>
         </Card>
         <Card className="border-0 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-purple-50 to-indigo-50">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-purple-700">Administrateurs</CardTitle>
+          <CardHeader className="pb-2 sm:pb-3">
+            <CardTitle className="text-xs sm:text-sm font-medium text-purple-700">Admins</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-purple-700">{stats.admins}</div>
-            <p className="text-sm text-purple-600">administrateurs</p>
+            <div className="text-2xl sm:text-3xl font-bold text-purple-700">{stats.admins}</div>
+            <p className="text-xs sm:text-sm text-purple-600 hidden sm:block">administrateurs</p>
+            <p className="text-xs sm:text-sm text-purple-600 sm:hidden">admins</p>
           </CardContent>
         </Card>
       </div>
@@ -187,57 +190,59 @@ export default function UsersPage() {
             Rechercher et filtrer les utilisateurs
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4 pt-6">
-          <div className="flex flex-col gap-4 md:flex-row">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+        <CardContent className="space-y-4 pt-4 sm:pt-6">
+          <div className="flex flex-col gap-3 sm:gap-4">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-2.5 sm:top-3 h-4 w-4 text-slate-400" />
               <Input
-                placeholder="Rechercher par email, nom ou prénom..."
+                placeholder="Rechercher..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-11 bg-slate-50 border-slate-200 focus:bg-white transition-colors"
+                className="pl-10 h-10 sm:h-11 bg-slate-50 border-slate-200 focus:bg-white transition-colors"
               />
             </div>
-            <Select value={roleFilter} onValueChange={setRoleFilter}>
-              <SelectTrigger className="w-full md:w-[180px] h-11 bg-slate-50 border-slate-200">
-                <SelectValue placeholder="Rôle" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous les rôles</SelectItem>
-                <SelectItem value={Role.User}>Utilisateur</SelectItem>
-                <SelectItem value={Role.Admin}>Administrateur</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full md:w-[180px] h-11 bg-slate-50 border-slate-200">
-                <SelectValue placeholder="Statut" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous les statuts</SelectItem>
-                <SelectItem value="active">Actifs</SelectItem>
-                <SelectItem value="deleted">Supprimés</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={sortByDate} onValueChange={setSortByDate}>
-              <SelectTrigger className="w-full md:w-[200px] h-11 bg-slate-50 border-slate-200">
-                <SelectValue placeholder="Trier par date" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">Pas de tri par date</SelectItem>
-                <SelectItem value="asc">Date croissante</SelectItem>
-                <SelectItem value="desc">Date décroissante</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={sortByRole} onValueChange={setSortByRole}>
-              <SelectTrigger className="w-full md:w-[200px] h-11 bg-slate-50 border-slate-200">
-                <SelectValue placeholder="Trier par rôle" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">Pas de tri par rôle</SelectItem>
-                <SelectItem value="asc">Rôle A-Z</SelectItem>
-                <SelectItem value="desc">Rôle Z-A</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
+              <Select value={roleFilter} onValueChange={setRoleFilter}>
+                <SelectTrigger className="h-10 sm:h-11 bg-slate-50 border-slate-200">
+                  <SelectValue placeholder="Rôle" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous les rôles</SelectItem>
+                  <SelectItem value={Role.User}>Utilisateur</SelectItem>
+                  <SelectItem value={Role.Admin}>Administrateur</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="h-10 sm:h-11 bg-slate-50 border-slate-200">
+                  <SelectValue placeholder="Statut" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous les statuts</SelectItem>
+                  <SelectItem value="active">Actifs</SelectItem>
+                  <SelectItem value="deleted">Supprimés</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={sortByDate} onValueChange={setSortByDate}>
+                <SelectTrigger className="h-10 sm:h-11 bg-slate-50 border-slate-200">
+                  <SelectValue placeholder="Tri date" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Pas de tri</SelectItem>
+                  <SelectItem value="asc">Date ↑</SelectItem>
+                  <SelectItem value="desc">Date ↓</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={sortByRole} onValueChange={setSortByRole}>
+                <SelectTrigger className="h-10 sm:h-11 bg-slate-50 border-slate-200 col-span-2 sm:col-span-1">
+                  <SelectValue placeholder="Tri rôle" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Pas de tri</SelectItem>
+                  <SelectItem value="asc">Rôle A-Z</SelectItem>
+                  <SelectItem value="desc">Rôle Z-A</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <UserTable
@@ -251,7 +256,7 @@ export default function UsersPage() {
       </Card>
 
       <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Créer un utilisateur</DialogTitle>
             <DialogDescription>
@@ -263,7 +268,7 @@ export default function UsersPage() {
       </Dialog>
 
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Modifier l'utilisateur</DialogTitle>
             <DialogDescription>
