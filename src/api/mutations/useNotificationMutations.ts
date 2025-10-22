@@ -37,12 +37,10 @@ export const useDeletePushToken = () => {
   return useMutation({
     mutationFn: async ({
       deviceId,
-      expoPushToken,
     }: {
       deviceId: string;
-      expoPushToken: string;
     }) => {
-      await apiClient.delete(`/push-notifications/token/${deviceId}/${expoPushToken}`);
+      await apiClient.delete(`/push-notifications/token/${deviceId}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['pushTokens'] });

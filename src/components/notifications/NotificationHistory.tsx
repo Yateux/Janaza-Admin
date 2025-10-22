@@ -27,7 +27,7 @@ import { Trash2, ExternalLink } from 'lucide-react';
 interface NotificationHistoryProps {
   tokens: PushToken[];
   loading: boolean;
-  onDelete: (deviceId: string, expoPushToken: string) => void;
+  onDelete: (deviceId: string) => void;
 }
 
 export function NotificationHistory({ tokens, loading, onDelete }: NotificationHistoryProps) {
@@ -44,7 +44,7 @@ export function NotificationHistory({ tokens, loading, onDelete }: NotificationH
 
   const handleConfirmDelete = () => {
     if (selectedToken) {
-      onDelete(selectedToken.deviceId, selectedToken.expoPushToken);
+      onDelete(selectedToken.deviceId);
       setDeleteDialogOpen(false);
       setSelectedToken(null);
     }

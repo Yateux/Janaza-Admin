@@ -10,8 +10,8 @@ export default function NotificationsPage() {
   const { data: pushTokens, isLoading: tokensLoading } = usePushTokens();
   const deletePushToken = useDeletePushToken();
 
-  const handleDeleteToken = (deviceId: string, expoPushToken: string) => {
-    deletePushToken.mutate({ deviceId, expoPushToken });
+  const handleDeleteToken = (deviceId: string) => {
+    deletePushToken.mutate({ deviceId });
   };
 
   const devicesCount = pushTokens?.length || 0;
