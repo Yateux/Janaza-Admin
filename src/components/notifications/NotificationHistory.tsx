@@ -34,8 +34,21 @@ export function NotificationHistory({ tokens, loading, onDelete }: NotificationH
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedToken, setSelectedToken] = useState<PushToken | null>(null);
 
-  // Debug: voir la structure des données
-  console.log('tokens:', tokens);
+  // Debug: vérifier le format des dates reçues de l'API
+  // Les dates système (createdAt, updatedAt) doivent avoir des millisecondes précises (ex: .874Z)
+  // pour être converties de UTC → Europe/Paris automatiquement par formatDisplayDateTime
+  if (tokens && tokens.length > 0) {
+    const firstToken = tokens[0];
+    console.log('🔍 Debug Token Push - Format des dates:', {
+      deviceId: firstToken.deviceId.substring(0, 20) + '...',
+      createdAt_raw: firstToken.createdAt,
+      createdAt_type: typeof firstToken.createdAt,
+      createdAt_string: String(firstToken.createdAt),
+      updatedAt_raw: firstToken.updatedAt,
+      updatedAt_string: String(firstToken.updatedAt),
+      note: 'Les dates doivent finir par des millisecondes précises (ex: .874Z) pour conversion timezone',
+    });
+  }
 
   const handleDeleteClick = (token: PushToken) => {
     setSelectedToken(token);

@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from '@/lib/dayjs';
 
 /**
  * SYSTÈME DE GESTION DES DATES BACKEND

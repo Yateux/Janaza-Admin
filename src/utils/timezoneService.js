@@ -1,16 +1,4 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import 'dayjs/locale/fr';
-
-// Étendre dayjs avec les plugins nécessaires
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.extend(customParseFormat);
-
-// Définir la locale française par défaut
-dayjs.locale('fr');
+import dayjs from '@/lib/dayjs';
 
 /**
  * Détecter le timezone du navigateur de l'utilisateur
